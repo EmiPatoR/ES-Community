@@ -1,3 +1,7 @@
+esc_main:
+    resource: "@ESCMainBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
