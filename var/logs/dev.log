@@ -1,2 +1,0 @@
-[2016-01-12 20:07:26] request.INFO: Matched route "esc_main_homepage". {"route_parameters":{"_controller":"ESC\\MainBundle\\Controller\\DefaultController::indexAction","_route":"esc_main_homepage"},"request_uri":"http://dev.escommunity.com/app_dev.php/"} []
-[2016-01-12 20:07:26] security.INFO: Populated the TokenStorage with an anonymous Token. [] []
