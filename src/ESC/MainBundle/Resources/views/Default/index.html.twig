@@ -1,5 +1,16 @@
-<html>
-    <body>
-        Hello World !
-    </body>
-</html>
+{% extends "ESCMainBundle::layout.html.twig" %}
+
+{% block body_escnews %}
+    <div class="panel-group">
+    {% for news in listNews %}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ news.title }}</div>
+            <div class="panel-body">
+                <p>{{ news.content }}</p>
+            </div>
+        </div>
+    {% else %}
+        <p>Pas (encore !) de News.</p>
+    {% endfor %}
+    </div>
+{% endblock %}

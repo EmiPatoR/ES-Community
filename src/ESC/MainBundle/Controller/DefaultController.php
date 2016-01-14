@@ -9,7 +9,9 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        $content = $this->get("templating")->render("ESCMainBundle:Default:index.html.twig");
+        $content = $this->get("templating")->render("ESCMainBundle:Default:index.html.twig",array(
+            'listNews' => array()
+        ));
         return new Response($content);
     }
 }
