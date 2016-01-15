@@ -1,3 +1,11 @@
 esc_main_homepage:
     path:     /
     defaults: { _controller: ESCMainBundle:Default:index }
+esc_news_view:
+    path:     /news/view/{id}
+    defaults: { _controller: ESCMainBundle:News:view }
+    requirements:
+        id: \d+
+esc_news_add:
+    path:     /news/add
+    defaults: { _controller: ESCMainBundle:News:add }
