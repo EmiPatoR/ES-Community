@@ -3,3 +3,5 @@ jQuery(function(){
         $("#ModalLogin").modal();
     });
 });
+
+//TODO REMOVE FUNCTION

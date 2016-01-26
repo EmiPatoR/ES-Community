@@ -3,10 +3,26 @@
 {% block body_escnews %}
     <div class="panel-group">
     {% for news in listNews %}
-        <div class="panel panel-default">
-            <div class="panel-heading">{{ news.title }}</div>
-            <div class="panel-body">
-                <p>{{ news.content }}</p>
+        <div class="panel
+            {% if news.gameID == 1 %}
+                panel-default
+            {% else %}
+                panel-default
+            {% endif %}
+        ">
+            <div class="panel-heading">
+                <a data-toggle="collapse" href="#collapse{{ loop.index }}">
+                    {{ news.title }}
+                    <span class="pull-right">{{ news.date|date('d/m/Y') }}</span>
+                </a>
+            </div>
+            <div id="collapse{{ loop.index }}" class="panel-collapse collapse in">
+                <div class="panel-body">
+                    <p>{{ news.content }}</p>
+                    <span class="pull-right">
+                        Ecrit par {{ news.author }}
+                    </span>
+                </div>
             </div>
         </div>
     {% else %}

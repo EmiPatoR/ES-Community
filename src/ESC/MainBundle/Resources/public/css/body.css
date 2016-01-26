@@ -34,3 +34,16 @@ footer {
         height: auto;
     }
 }
+
+/* Login Modal header */
+.modal-header, h4, .close {
+    background-color: #595959;
+    color:white !important;
+    text-align: center;
+    font-size: 30px;
+}
+
+/* Login Modal footer */
+.modal-footer {
+    background-color: #f9f9f9;
+}
