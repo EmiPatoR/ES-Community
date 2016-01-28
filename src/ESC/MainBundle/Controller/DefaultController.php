@@ -12,17 +12,29 @@ class DefaultController extends Controller
         //Fix arbitrary value, TODO replace it with BD news
         $listNews = array(
             array(
+                'id'        =>      123,
                 'title'     =>      'News de LoL',
                 'gameID'    =>      1,
                 'author'    =>      'EmiP',
-                'content'   =>      'Une news de LoL blablabla...',
+                'content'   =>      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
                 'date'      =>      new \DateTime()
             ),
             array(
+                'id'        =>      168,
                 'title'     =>      'News de Dota',
                 'gameID'    =>      2,
+                'author'    =>      'dark_moody',
+                'content'   =>      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+                'date'      =>      new \DateTime()
+            ),
+            array(
+                'id'        =>      95,
+                'title'     =>      'News de CS:GO',
+                'gameID'    =>      3,
                 'author'    =>      'EmiP',
-                'content'   =>      'Une news de dota blablabla...',
+                'content'   =>      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                Lorem ipsum dolor sit amet, consectetur.',
                 'date'      =>      new \DateTime()
             )
         );
