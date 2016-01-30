@@ -4,6 +4,10 @@ parameters:
 #    parameter_name: value
 
 services:
+    esc.game_api.lol.connector:
+        class:  ESC\MainBundle\APIs\LoL\ESCLolapiConnector
+        arguments:
+
 #    service_name:
 #        class: AppBundle\Directory\ClassName
 #        arguments: ["@another_service_name", "plain_value", "%parameter_name%"]

@@ -1,4 +1,4 @@
-services:
 #    esc_main.example:
 #        class: ESC\MainBundle\Example
 #        arguments: ["@service_id", "plain_value", %parameter%]
+services:

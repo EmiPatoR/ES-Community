@@ -7,7 +7,20 @@
 
     namespace ESC\MainBundle\APIs\LoL;
 
+    use ESC\MainBundle\APIs\LoL\ESCLolapiConsts;
+
     class ESCLolapi
     {
+
         //TODO
+        private $constants;
+
+        //Constructor
+        public function __construct(ESCLolapiConsts $consts){
+            $this->constants = $consts;
+        }
+
+        public function test(){
+
+        }
     }

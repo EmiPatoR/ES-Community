@@ -42,6 +42,7 @@ class DefaultController extends Controller
         $content = $this->get("templating")->render("ESCMainBundle:Default:index.html.twig",array(
             'listNews' => $listNews
         ));
+
         return new Response($content);
     }
 }
