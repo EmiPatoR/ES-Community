@@ -115,9 +115,16 @@ final class ESCLolapiConsts
         // API STATS
     const URL_STATS_RANKED_BY_SUMMONER_ID = "/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/ranked";
     const URL_STATS_GENERAL_BY_SUMMONER_ID = "/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/summary";
-
-
-    //TODO To FINISH
+        // API SUMMONER
+    const URL_SUMMONER_BY_ACCOUNT_IDS = "/api/lol/{region}/v1.4/summoner/by-account/{accountIds}";
+    const URL_SUMMONER_BY_SUMMONER_NAMES = "/api/lol/{region}/v1.4/summoner/by-name/{summonerNames}";
+    const URL_SUMMONER_BY_SUMMONER_IDS = "/api/lol/{region}/v1.4/summoner/{summonerIds}";
+    const URL_SUMMONER_MASTERIES_PAGE_BY_SUMMONER_ID = "/api/lol/{region}/v1.4/summoner/{summonerIds}/masteries";
+    const URL_SUMMONER_NAME_BY_SUMMONER_ID = "/api/lol/{region}/v1.4/summoner/{summonerIds}/name";
+    const URL_SUMMONER_RUNE_PAGES_BY_SUMMONER_IDS = "/api/lol/{region}/v1.4/summoner/{summonerIds}/runes";
+        // API TEAM
+    const URL_TEAM_BY_SUMMONER_IDS = "/api/lol/{region}/v2.4/team/by-summoner/{summonerIds}";
+    const URL_TEAM_BY_TEAM_IDS = "/api/lol/{region}/v2.4/team/{teamIds}";
 
     //URL START
     const URL_START = "https://";
@@ -131,6 +138,8 @@ final class ESCLolapiConsts
     const PARAM_TEAM_IDS = 5;
     const PARAM_ID = 6;
     const PARAM_MATCH_ID = 7;
+    const PARAM_ACCOUNT_IDS = 8;
+    const PARAM_SUMMONER_NAMES = 9;
 
     //Options
     const OPTION_ALL_CHAMPIONS_F2P = 1; // to return only Free to play champions
@@ -141,6 +150,7 @@ final class ESCLolapiConsts
     const OPTION_LEAGUE_MASTER_TYPE_5V5 = 6;
     const OPTION_LEAGUE_MASTER_TYPE_3V3 = 7;
     const OPTION_LEAGUE_MASTER_TYPE_SOLOQ = 8;
+    //TODO FINISH
 
 
 
@@ -192,8 +202,9 @@ final class ESCLolapiConsts
         switch($api){
 
             case self::URL_CHAMPION_BY_ID:
-                $ret = str_replace("{id}",$params[self::PARAM_CHAMPION_ID],$ret);
-
+                if($params != null)
+                    $ret = str_replace("{id}",$params[self::PARAM_CHAMPION_ID],$ret);
+                break;
         }
         return str_replace("{region}",$region,$ret);
     }

@@ -7,21 +7,20 @@
 
 namespace ESC\MainBundle\APIs\LoL;
 use ESC\MainBundle\Entity\LOLChampion;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\GetSetMethodNormalizer;
-use Symfony\Component\Serializer\Serializer;
+use Doctrine\ORM\EntityManager;
 
 class ESCLolapiConnector
 {
     protected $curlRessource;
     protected $constants;
     protected $champions;
+    protected $em;
 
 
     //Constructor
-    public function __construct()
+    public function __construct(EntityManager $em)
     {
-
+        $this->em = $em;
     }
 
     protected function initRessource($url){
@@ -51,18 +50,68 @@ class ESCLolapiConnector
         return $champion;
     }
 
-    public function getChampion($id){
-        $params = ESCLolapiConsts::generateParams(ESCLolapiConsts::PARAM_CHAMPION_ID,$id);
-        $url = ESCLolapiConsts::generateURL(ESCLolapiConsts::EUW,ESCLolapiConsts::URL_CHAMPION_BY_ID,$params);
+    /**
+     * Save ALL champions in DB
+     * @param $json
+     */
+    protected function saveAllChampions($json){
+        $championsList = $json->{"champions"};
+        $size = count($championsList);
+        for ($i=0;$i<$size;++$i){
+            $currentChamp = $this->getChampionFromJSON($championsList[$i]);
+            $this->em->persist($currentChamp);
+        }
+        $this->em->flush();
+    }
+
+    /**
+     * Save the specified champion in DB
+     *
+     * @param $champion
+     */
+    public function saveChampion($champion){
+        $this->em->persist($champion);
+        $this->em->flush();
+    }
+
+    /**
+     *
+     * Get a champion from LoL API or From DB according to $db value.
+     *
+     * @param $id
+     * @param $db
+     * @return LOLChampion
+     */
+    public function getChampion($id,$db=true){
+        $champion = null;
+        if($db) {
+            $params = ESCLolapiConsts::generateParams(ESCLolapiConsts::PARAM_CHAMPION_ID, $id);
+            $url = ESCLolapiConsts::generateURL(ESCLolapiConsts::EUW, ESCLolapiConsts::URL_CHAMPION_BY_ID, $params);
+            $this->initRessource($url);
+            $result = curl_exec($this->curlRessource);
+            curl_close($this->curlRessource);
+            $json = json_decode($result);
+            $champion = $this->getChampionFromJSON($json);
+        }
+        else{
+            $repo = $this->em->getRepository("ESCMainBundle:LOLChampion");
+            $champion = $repo->findOneBy(
+                array('championId',$id)
+            );
+        }
+        return $champion;
+    }
+
+    /**
+     * Save All champions in DB
+     *
+     */
+    public function saveChampions(){
+        $url = ESCLolapiConsts::generateURL(ESCLolapiConsts::EUW,ESCLolapiConsts::URL_ALL_CHAMIPONS,null);
         $this->initRessource($url);
         $result = curl_exec($this->curlRessource);
         curl_close($this->curlRessource);
         $json = json_decode($result);
-        $champion = $this->getChampionFromJSON($json);
-        return strval($champion->getActive());
-    }
-
-    public function getChampions(){
-        return ESCLolapiConsts::generateURL(ESCLolapiConsts::EUW,ESCLolapiConsts::URL_ALL_CHAMIPONS);
+        $this->saveAllChampions($json);
     }
 }

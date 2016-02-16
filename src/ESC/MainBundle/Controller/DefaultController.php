@@ -39,13 +39,10 @@ class DefaultController extends Controller
             )
         );
 
-        /*
+
         $content = $this->get("templating")->render("ESCMainBundle:Default:index.html.twig",array(
             'listNews' => $listNews
         ));
-        */
-
-        $content = $this->get("esc.game_api.lol.connector")->getChampion(34);
 
         return new Response($content);
     }

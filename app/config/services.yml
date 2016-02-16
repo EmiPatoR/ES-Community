@@ -6,7 +6,7 @@ parameters:
 services:
     esc.game_api.lol.connector:
         class:  ESC\MainBundle\APIs\LoL\ESCLolapiConnector
-        arguments:
+        arguments: ["@doctrine.orm.entity_manager"]
 
 #    service_name:
 #        class: AppBundle\Directory\ClassName
