@@ -18,7 +18,7 @@ final class ESCLolapiConsts
     const LANG_CZECH = "cs_CZ";
     const LANG_GERMAN = "de_DE";
     const LANG_GREEK = "el_GR";
-    const LANG_ENGLISH_AUSTALIA = "en_AU";
+    const LANG_ENGLISH_AUSTRALIA = "en_AU";
     const LANG_ENGLISH_UK = "en_GB";
     const LANG_ENGLISH_PHILIPPINES = "en_PH";
     const LANG_ENGLISH_POLAND = "en_PL";
@@ -35,7 +35,7 @@ final class ESCLolapiConsts
     const LANG_KOREAN = "ko_KR";
     const LANG_MALAY = "ms_MY";
     const LANG_POLISH = "pl_PL";
-    const LANG_PORTUGUESE_BRASIL = "pt_BR";
+    const LANG_PORTUGUESE_BRAZIL = "pt_BR";
     const LANG_ROMANIAN = "ro_RO";
     const LANG_RUSSIAN = "ru_RU";
     const LANG_THAI = "th_TH";
@@ -59,8 +59,6 @@ final class ESCLolapiConsts
     const PLATFORM_ID_PBE = "PBE1";
 
     //REGIONS
-
-    //REGIONS URLS
     const BR = "br";
     const EUNE = "eune";
     const EUW = "euw";
@@ -94,24 +92,113 @@ final class ESCLolapiConsts
         //API STATIC DATA
     const URL_STATIC_DATA_ALL_CHAMPIONS_API = "/api/lol/static-data/{region}/v1.2/champion";
     const URL_STATIC_DATA_CHAMPION_BY_ID_API = "/api/lol/static-data/{region}/v1.2/champion/{id}";
+    const URL_STATIC_DATA_ALL_ITEMS_API = "/api/lol/static-data/{region}/v1.2/item";
+    const URL_STATIC_DATA_ITEM_BY_ID = "/api/lol/static-data/{region}/v1.2/item/{id}";
+    const URL_STATIC_DATA_LANGUAGE_STRINGS = "/api/lol/static-data/{region}/v1.2/language-strings";
+    const URL_STATIC_DATA_LANGUAGES = "/api/lol/static-data/{region}/v1.2/languages";
+    const URL_STATIC_DATA_MAP = "/api/lol/static-data/{region}/v1.2/map";
+    const URL_STATIC_DATA_MASTERIES = "/api/lol/static-data/{region}/v1.2/mastery";
+    const URL_STATIC_DATA_MASTERY_BY_ID = "/api/lol/static-data/{region}/v1.2/mastery/{id}";
+    const URL_STATIC_DATA_REALM = "/api/lol/static-data/{region}/v1.2/realm";
+    const URL_STATIC_DATA_RUNES = "/api/lol/static-data/{region}/v1.2/rune";
+    const URL_STATIC_DATA_RUNE_BY_ID = "/api/lol/static-data/{region}/v1.2/rune/{id}";
+    const URL_STATIC_DATA_SUMMONER_SPELLS = "/api/lol/static-data/{region}/v1.2/summoner-spell";
+    const URL_STATIC_DATA_SUMMONER_SPELL_BY_ID = "/api/lol/static-data/{region}/v1.2/summoner-spell/{id}";
+    const URL_STATIC_DATA_VERSIONS = "/api/lol/static-data/{region}/v1.2/versions";
+        //API STATUS
+    const URL_STATUS_SHARDS = "/shards";
+    const URL_STATUS_SHARD_BY_REGION = "/shards/{region}";
+        //API_MATCHES
+    const URL_MATCH_BY_ID = "/api/lol/{region}/v2.2/match/{matchId}";
+        //API MATCH LIST
+    const URL_MATCH_LIST_BY_SUMMONER_ID = "/api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}";
+        // API STATS
+    const URL_STATS_RANKED_BY_SUMMONER_ID = "/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/ranked";
+    const URL_STATS_GENERAL_BY_SUMMONER_ID = "/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/summary";
+
+
     //TODO To FINISH
 
     //URL START
     const URL_START = "https://";
     const URL_MIDDLE = ".api.pvp.net";
 
+    //Parameters
+    const PARAM_CHAMPION_ID = 1;
+    const PARAM_PLATFORM_ID = 2;
+    const PARAM_SUMMONER_ID = 3;
+    const PARAM_SUMMONER_IDS = 4;
+    const PARAM_TEAM_IDS = 5;
+    const PARAM_ID = 6;
+    const PARAM_MATCH_ID = 7;
+
+    //Options
+    const OPTION_ALL_CHAMPIONS_F2P = 1; // to return only Free to play champions
+    const OPTION_COUNT_TOP_CHAMPIONS_MASTERIES = 2; // Default value if not specified is Count=3
+    const OPTION_LEAGUE_CHALLENGER_TYPE_5V5 = 3;
+    const OPTION_LEAGUE_CHALLENGER_TYPE_3V3 = 4;
+    const OPTION_LEAGUE_CHALLENGER_TYPE_SOLOQ = 5;
+    const OPTION_LEAGUE_MASTER_TYPE_5V5 = 6;
+    const OPTION_LEAGUE_MASTER_TYPE_3V3 = 7;
+    const OPTION_LEAGUE_MASTER_TYPE_SOLOQ = 8;
+
+
+
     //static methods
+
     /**
-     * Concats PARAMS to generate API's corresponding URL
-     * @param $region string
-     * @param $api string
-     * @param string $options
-     * @return string concatened URL
+     * Generate parameters needed for an URL API
+     *
+     * @param $param
+     * @param $value
+     * @param null $old
+     * @return array|null
      */
-    public static function generateURL($region,$api, $options = ""){
+    public static function generateParams($param,$value,$old = null){
+        if($old != null){
+            $old[$param] = $value;
+            return $old;
+        }
+        return array($param => $value);
+    }
+
+    /**
+     * Generate options needed for an URL API
+     *
+     * @param $option
+     * @param $value
+     * @param null $old
+     * @return array|null
+     */
+    public static function generateOpts($option,$value,$old = null){
+        if($old != null){
+            $old[$option] = $value;
+            return $old;
+        }
+        return array($option => $value);
+    }
+
+    /**
+     * return the corresponding URL to the given API with given parameters.
+     *
+     * @param $region
+     * @param $api
+     * @param $params
+     * @param string $options
+     * @return string url
+     */
+    public static function generateURL($region,$api,$params, $options = ""){
         $ret = self::URL_START . $region . self::URL_MIDDLE . $api . "?api_key=" . self::KEY . $options;
+        switch($api){
+
+            case self::URL_CHAMPION_BY_ID:
+                $ret = str_replace("{id}",$params[self::PARAM_CHAMPION_ID],$ret);
+
+        }
         return str_replace("{region}",$region,$ret);
     }
+
+
 
 
 }

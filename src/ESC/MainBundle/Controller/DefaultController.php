@@ -9,7 +9,7 @@ class DefaultController extends Controller
 {
     public function indexAction()
     {
-        //Fix arbitrary value, TODO replace it with BD news
+        //Fix arbitrary value, TODO replace it with DB news
         $listNews = array(
             array(
                 'id'        =>      123,
@@ -39,9 +39,13 @@ class DefaultController extends Controller
             )
         );
 
+        /*
         $content = $this->get("templating")->render("ESCMainBundle:Default:index.html.twig",array(
             'listNews' => $listNews
         ));
+        */
+
+        $content = $this->get("esc.game_api.lol.connector")->getChampion(34);
 
         return new Response($content);
     }
