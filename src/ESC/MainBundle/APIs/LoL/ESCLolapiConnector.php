@@ -8,6 +8,7 @@
 namespace ESC\MainBundle\APIs\LoL;
 use ESC\MainBundle\Entity\LOLChampion;
 use Doctrine\ORM\EntityManager;
+use ESC\MainBundle\Entity\LOLSummoner;
 
 class ESCLolapiConnector
 {
@@ -37,6 +38,16 @@ class ESCLolapiConnector
         //set the url
         curl_setopt($this->curlRessource,CURLOPT_URL, $url);
 
+    }
+
+    protected function getSummonerFromJSON($json,$name){
+        $summoner = new LOLSummoner();
+        $summoner->setSummonerID($json->{$name}->{"id"});
+        $summoner->setName($json->{$name}->{"name"});
+        $summoner->setProfileIconId($json->{$name}->{"profileIconId"});
+        $summoner->setRevisionDate($json->{$name}->{"revisionDate"});
+        $summoner->setSummonerLevel($json->{$name}->{"summonerLevel"});
+        return $summoner;
     }
 
     protected function getChampionFromJSON($json){
@@ -75,6 +86,16 @@ class ESCLolapiConnector
     }
 
     /**
+     * Save the specified summoner in DB
+     *
+     * @param $summoner
+     */
+    public function saveSummoner($summoner){
+        $this->em->persist($summoner);
+        $this->em->flush();
+    }
+
+    /**
      *
      * Get a champion from LoL API or From DB according to $db value.
      *
@@ -84,7 +105,7 @@ class ESCLolapiConnector
      */
     public function getChampion($id,$db=true){
         $champion = null;
-        if($db) {
+        if(!$db) {
             $params = ESCLolapiConsts::generateParams(ESCLolapiConsts::PARAM_CHAMPION_ID, $id);
             $url = ESCLolapiConsts::generateURL(ESCLolapiConsts::EUW, ESCLolapiConsts::URL_CHAMPION_BY_ID, $params);
             $this->initRessource($url);
@@ -100,6 +121,37 @@ class ESCLolapiConnector
             );
         }
         return $champion;
+    }
+
+    /**
+     *
+     * Get a summoner from LoL API or From DB according to $db value.
+     *
+     * @param $name
+     * @param $db
+     * @return LOLChampion
+     */
+    public function getSummoner($name,$db=true){
+        $sum = null;
+        //Removes spaces from name ans put to lowercase
+        $treatedName = strtolower($name);
+        $treatedName = str_replace(" ","",$treatedName);
+        if(!$db){
+            $params = ESCLolapiConsts::generateParams(ESCLolapiConsts::PARAM_SUMMONER_NAMES, $treatedName);
+            $url = ESCLolapiConsts::generateURL(ESCLolapiConsts::EUW, ESCLolapiConsts::URL_SUMMONER_BY_SUMMONER_NAMES, $params);
+            $this->initRessource($url);
+            $result = curl_exec($this->curlRessource);
+            curl_close($this->curlRessource);
+            $json = json_decode($result);
+            $sum = $this->getSummonerFromJSON($json,$treatedName);
+        }
+        else{
+            $repo = $this->em->getRepository("ESCMainBundle:LOLSummoner");
+            $sum = $repo->findOneBy(
+                array('name',$name)
+            );
+        }
+        return $sum;
     }
 
     /**

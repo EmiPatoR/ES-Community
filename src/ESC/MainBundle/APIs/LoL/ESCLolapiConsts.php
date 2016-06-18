@@ -52,7 +52,7 @@ final class ESCLolapiConsts
     const PLATFORM_ID_KR = "KR";
     const PLATFORM_ID_LAN = "LA1";
     const PLATFORM_ID_LAS = "LA2";
-    const PLATFORM_ID_NA  = "NA1";
+    const PLATFORM_ID_NA = "NA1";
     const PLATFORM_ID_OCE = "OC1";
     const PLATFORM_ID_TR = "TR1";
     const PLATFORM_ID_RU = "RU";
@@ -75,21 +75,21 @@ final class ESCLolapiConsts
     //
 
     //API URLS
-        //API CHAMPIONS
+    //API CHAMPIONS
     const URL_ALL_CHAMIPONS = "/api/lol/{region}/v1.2/champion";
     const URL_CHAMPION_BY_ID = "/api/lol/{region}/v1.2/champion/{id}";
-        //API CHAMPION MASTERY
+    //API CHAMPION MASTERY
     const URL_CHAMPION_MASTERY_BY_ID_API = "/championmastery/location/{platformId}/player/{summonerId}/champion/{championId}";
     const URL_ALL_CHAMPIONS_MASTERIES_API = "/championmastery/location/{platformId}/player/{summonerId}/champions";
     const URL_TOP_CHAMPIONS_MASTERIES_API = "/championmastery/location/{platformId}/player/{summonerId}/topchampions";
     const URL_TOTAL_MASTERIES_SCORE_API = "/championmastery/location/{platformId}/player/{summonerId}/score";
-        //API CURRENT GAME
+    //API CURRENT GAME
     const URL_CURRENT_GAME_API = "/observer-mode/rest/consumer/getSpectatorGameInfo/{platformId}/{summonerId}";
-        //API FEATURED GAMES
+    //API FEATURED GAMES
     const URL_FEATURED_GAMES_API = "/observer-mode/rest/featured";
-        //API GAME
+    //API GAME
     const URL_RECENT_GAME_API = "/api/lol/{region}/v1.3/game/by-summoner/{summonerId}/recent";
-        //API STATIC DATA
+    //API STATIC DATA
     const URL_STATIC_DATA_ALL_CHAMPIONS_API = "/api/lol/static-data/{region}/v1.2/champion";
     const URL_STATIC_DATA_CHAMPION_BY_ID_API = "/api/lol/static-data/{region}/v1.2/champion/{id}";
     const URL_STATIC_DATA_ALL_ITEMS_API = "/api/lol/static-data/{region}/v1.2/item";
@@ -105,30 +105,36 @@ final class ESCLolapiConsts
     const URL_STATIC_DATA_SUMMONER_SPELLS = "/api/lol/static-data/{region}/v1.2/summoner-spell";
     const URL_STATIC_DATA_SUMMONER_SPELL_BY_ID = "/api/lol/static-data/{region}/v1.2/summoner-spell/{id}";
     const URL_STATIC_DATA_VERSIONS = "/api/lol/static-data/{region}/v1.2/versions";
-        //API STATUS
+    //API STATUS
     const URL_STATUS_SHARDS = "/shards";
     const URL_STATUS_SHARD_BY_REGION = "/shards/{region}";
-        //API_MATCHES
+    //API_MATCHES
     const URL_MATCH_BY_ID = "/api/lol/{region}/v2.2/match/{matchId}";
-        //API MATCH LIST
+    //API MATCH LIST
     const URL_MATCH_LIST_BY_SUMMONER_ID = "/api/lol/{region}/v2.2/matchlist/by-summoner/{summonerId}";
-        // API STATS
+    // API STATS
     const URL_STATS_RANKED_BY_SUMMONER_ID = "/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/ranked";
     const URL_STATS_GENERAL_BY_SUMMONER_ID = "/api/lol/{region}/v1.3/stats/by-summoner/{summonerId}/summary";
-        // API SUMMONER
+    // API SUMMONER
     const URL_SUMMONER_BY_ACCOUNT_IDS = "/api/lol/{region}/v1.4/summoner/by-account/{accountIds}";
     const URL_SUMMONER_BY_SUMMONER_NAMES = "/api/lol/{region}/v1.4/summoner/by-name/{summonerNames}";
     const URL_SUMMONER_BY_SUMMONER_IDS = "/api/lol/{region}/v1.4/summoner/{summonerIds}";
     const URL_SUMMONER_MASTERIES_PAGE_BY_SUMMONER_ID = "/api/lol/{region}/v1.4/summoner/{summonerIds}/masteries";
     const URL_SUMMONER_NAME_BY_SUMMONER_ID = "/api/lol/{region}/v1.4/summoner/{summonerIds}/name";
     const URL_SUMMONER_RUNE_PAGES_BY_SUMMONER_IDS = "/api/lol/{region}/v1.4/summoner/{summonerIds}/runes";
-        // API TEAM
+    // API TEAM
     const URL_TEAM_BY_SUMMONER_IDS = "/api/lol/{region}/v2.4/team/by-summoner/{summonerIds}";
     const URL_TEAM_BY_TEAM_IDS = "/api/lol/{region}/v2.4/team/{teamIds}";
 
     //URL START
     const URL_START = "https://";
     const URL_MIDDLE = ".api.pvp.net";
+    const URL_API_KEY = "?api_key=";
+
+    //URL PARAMS
+    const URL_PARAM_ID = "{id}";
+    const URL_PARAM_SUMMONER_NAMES = "{summonerNames}";
+    //TODO FINISH
 
     //Parameters
     const PARAM_CHAMPION_ID = 1;
@@ -153,7 +159,6 @@ final class ESCLolapiConsts
     //TODO FINISH
 
 
-
     //static methods
 
     /**
@@ -164,8 +169,9 @@ final class ESCLolapiConsts
      * @param null $old
      * @return array|null
      */
-    public static function generateParams($param,$value,$old = null){
-        if($old != null){
+    public static function generateParams($param, $value, $old = null)
+    {
+        if ($old != null) {
             $old[$param] = $value;
             return $old;
         }
@@ -180,8 +186,9 @@ final class ESCLolapiConsts
      * @param null $old
      * @return array|null
      */
-    public static function generateOpts($option,$value,$old = null){
-        if($old != null){
+    public static function generateOpts($option, $value, $old = null)
+    {
+        if ($old != null) {
             $old[$option] = $value;
             return $old;
         }
@@ -197,19 +204,24 @@ final class ESCLolapiConsts
      * @param string $options
      * @return string url
      */
-    public static function generateURL($region,$api,$params, $options = ""){
-        $ret = self::URL_START . $region . self::URL_MIDDLE . $api . "?api_key=" . self::KEY . $options;
-        switch($api){
+    public static function generateURL($region, $api, $params, $options = "")
+    {
+        $ret = self::URL_START . $region . self::URL_MIDDLE . $api . self::URL_API_KEY . self::KEY . $options;
+        if ($params != null) {
+            switch ($api) {
 
-            case self::URL_CHAMPION_BY_ID:
-                if($params != null)
-                    $ret = str_replace("{id}",$params[self::PARAM_CHAMPION_ID],$ret);
-                break;
+                case self::URL_CHAMPION_BY_ID:
+                    $ret = str_replace(self::URL_PARAM_ID, $params[self::PARAM_CHAMPION_ID], $ret);
+                    break;
+                case self::URL_SUMMONER_BY_SUMMONER_NAMES:
+                    $ret = str_replace(self::URL_PARAM_SUMMONER_NAMES, $params[self::PARAM_SUMMONER_NAMES],$ret);
+                    break;
+            //TODO Complete
+            }
         }
-        return str_replace("{region}",$region,$ret);
+
+        return str_replace("{region}", $region, $ret);
     }
-
-
 
 
 }

@@ -2,6 +2,7 @@
 
 namespace ESC\MainBundle\Controller;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -39,6 +40,15 @@ class DefaultController extends Controller
             )
         );
 
+        $
+        $sum = $this->get("esc.game_api.lol.connector")->getSummoner("dark moody",false);
+        try {
+            $this->get("esc.game_api.lol.connector")->saveSummoner($sum);
+        }
+        catch(UniqueConstraintViolationException $e){
+            echo "TEST";
+            //TODO Summoner already in DB Error
+        }
 
         $content = $this->get("templating")->render("ESCMainBundle:Default:index.html.twig",array(
             'listNews' => $listNews
